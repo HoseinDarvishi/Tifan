@@ -13,7 +13,7 @@ public static class MapsterConfig
             .NewConfig()
             .TwoWays();
 
-        TypeAdapterConfig<ProductVM ,Models.Product>
+        TypeAdapterConfig<ProductVM, Models.Product>
             .NewConfig()
             .TwoWays();
     }
