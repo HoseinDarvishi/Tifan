@@ -1,24 +1,43 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Mapster;
+using Microsoft.EntityFrameworkCore;
 using Tifan.Product.Infra;
 using Tifan.Product.IServices;
+using Tifan.Product.Wrappers.Product;
 
-namespace Tifan.Product.Services
+namespace Tifan.Product.Services;
+
+public class ProductService(ProductDbContext context) : IProductService
 {
-    public class ProductService(ProductDbContext context) : IProductService
+    public async Task<ProductVM> GetAsync(Guid id, CancellationToken ct)
+        => await context.Products
+            .AsNoTracking()
+            .Where(x => x.Id == id)
+            .Include(x=>x.Category)
+            .ProjectToType<ProductVM>()
+            .FirstOrDefaultAsync(ct);
+
+    public async Task<List<ProductVM>> GetAllAsync(CancellationToken ct)
+        => await context.Products
+            .AsNoTracking()
+            .Include(x=>x.Category)
+            .ProjectToType<ProductVM>()
+            .ToListAsync(ct);
+
+    public async Task<Guid> AddAsync(CreateProduct p)
     {
-        public async Task<Models.Product> GetAsync(Guid id , CancellationToken ct)
-            => await context.Products.FindAsync(id,ct);
-
-        public async Task<List<Models.Product>> GetAllAsync(CancellationToken ct)
-            => await context.Products.ToListAsync(ct);
-
-        public async Task AddAsync(Models.Product product)
-            => await context.AddAsync(product);
-
-        public void Update(Models.Product product)
-            => context.Update(product);
-
-        public async Task RemoveAsync(Guid id)
-            => await context.Products.Where(x => x.Id == id).ExecuteDeleteAsync();
+        var model = new Models.Product(p.Name, p.Description, p.Image, p.Price, p.CategoryId);
+        await context.AddAsync(model);
+        await context.SaveChangesAsync();
+        return model.Id;
     }
+
+    public async Task UpdateAsync(EditProduct product)
+    {
+        var model = await context.Products.FindAsync(product.Id);
+        model.Edit(model.Name, model.Description, model.Image, model.Price, model.CategoryId);
+        await context.SaveChangesAsync();
+    }
+
+    public async Task RemoveAsync(Guid id)
+        => await context.Products.Where(x => x.Id == id).ExecuteDeleteAsync();
 }

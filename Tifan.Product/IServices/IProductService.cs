@@ -1,12 +1,13 @@
 ﻿
-namespace Tifan.Product.IServices
+using Tifan.Product.Wrappers.Product;
+
+namespace Tifan.Product.IServices;
+
+public interface IProductService
 {
-    public interface IProductService
-    {
-        Task AddAsync(Models.Product product);
-        Task<List<Models.Product>> GetAllAsync(CancellationToken ct);
-        Task<Models.Product> GetAsync(Guid id, CancellationToken ct);
-        Task RemoveAsync(Guid id);
-        void Update(Models.Product product);
-    }
+    Task<Guid> AddAsync(CreateProduct p);
+    Task<List<ProductVM>> GetAllAsync(CancellationToken ct);
+    Task<ProductVM> GetAsync(Guid id, CancellationToken ct);
+    Task RemoveAsync(Guid id);
+    Task UpdateAsync(EditProduct product);
 }
