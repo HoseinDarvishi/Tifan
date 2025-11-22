@@ -1,4 +1,6 @@
 using Mapster;
+using Microsoft.EntityFrameworkCore;
+using Tifan.Product.Infra;
 using Tifan.Product.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +9,11 @@ builder.AddServiceDefaults();
 builder.Services.AddMapster();
 
 MapsterConfig.RegisterMappings();
+
+builder.Services.AddDbContext<ProductDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("TifanProductDatabase")
+    ));
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
