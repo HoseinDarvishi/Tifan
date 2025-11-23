@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Tifan.Product.IServices;
-using Tifan.Product.Wrappers.Product;
+using Tifan.Product.Wrappers.Category;
 
 namespace Tifan.Product.Controllers;
 
 [Route("Tifan/Api/[controller]")]
 [ApiController]
-public class ProductController(IProductService _service) : Controller
+public class CategoryController(ICategoryService _service) : Controller
 {
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> Get(Guid id, CancellationToken ct)
+    public async Task<IActionResult> Get(Guid id , CancellationToken ct)
     {
         var product = await _service.GetAsync(id, ct);
         return Ok(product);
@@ -23,21 +23,21 @@ public class ProductController(IProductService _service) : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add([FromBody] CreateProduct product)
+    public async Task<IActionResult> Add(CreateCategory category)
     {
-        var productId = await _service.AddAsync(product);
-        return Ok(productId);
+        var categoryId = await _service.AddAsync(category);
+        return Ok(categoryId);
     }
 
     [HttpPatch]
-    public async Task<IActionResult> Edit([FromBody] EditProduct product)
+    public async Task<IActionResult> Edit(EditCategory category)
     {
-        await _service.UpdateAsync(product);
+        await _service.UpdateAsync(category);
         return Ok();
     }
 
     [HttpDelete]
-    public async Task<IActionResult> Remove(Guid id)
+    public async Task<IActionResult> Remove(Guid id) 
     {
         await _service.RemoveAsync(id);
         return Ok();

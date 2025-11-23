@@ -27,7 +27,9 @@ var app = builder.Build();
 app.MapDefaultEndpoints();
 
 if (app.Environment.IsDevelopment())
-    app.MapOpenApi();
+{
+    app.MapOpenApi("map");
+}
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
