@@ -6,7 +6,7 @@ public class BasketItem
 {
     private BasketItem() { }
 
-    public BasketItem(Guid basketId, Guid productId, string productName, string unitPrice, int quantity, string imageUrl)
+    public BasketItem(Guid basketId, Guid productId, string productName, decimal unitPrice, int quantity, string imageUrl)
     {
         BasketId = basketId;
         ProductId = productId;
@@ -20,7 +20,7 @@ public class BasketItem
     public Guid BasketId { get; private set; }
     public Guid ProductId { get; private set; }
     public string ProductName { get; private set; }
-    public string UnitPrice { get; private set; }
+    public decimal UnitPrice { get; private set; }
     public int Quantity { get; private set; }
     public string ImageUrl { get; private set; }
 
