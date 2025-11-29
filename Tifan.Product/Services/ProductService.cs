@@ -34,7 +34,7 @@ public class ProductService(ProductDbContext context) : IProductService
     public async Task UpdateAsync(EditProduct product)
     {
         var model = await context.Products.FindAsync(product.Id);
-        model.Edit(model.Name, model.Description, model.Image, model.Price, model.CategoryId);
+        model.Edit(product.Name, product.Description, product.Image, product.Price, product.CategoryId);
         await context.SaveChangesAsync();
     }
 
