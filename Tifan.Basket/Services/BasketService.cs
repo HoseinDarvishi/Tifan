@@ -34,7 +34,6 @@ public class BasketService(BasketDbContext context, IMapper mapper) : IBasketSer
             .ProjectToType<BasketVM>()
             .FirstOrDefaultAsync(ct);
 
-
     public async Task AddItemToBasketAsync(AddItemToBasket item , CancellationToken ct = default)
     {
         var basket = await context.Baskets.FindAsync(item.BasketId, ct);
@@ -46,7 +45,6 @@ public class BasketService(BasketDbContext context, IMapper mapper) : IBasketSer
 
     public async Task<bool> RemoveItemFromBasketAsync(Guid itemId , CancellationToken ct = default)
         => (await context.BasketItems.Where(x=>x.Id == itemId).ExecuteDeleteAsync(ct)) > 0;
-
 
     public async Task SetQuantityAsync(Guid itemId , int quantity , CancellationToken ct = default)
     {

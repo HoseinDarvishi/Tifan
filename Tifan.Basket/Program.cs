@@ -10,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+builder.Services.AddMapster();
+builder.Services.AddSwaggerGen();
 
 MapsterConfig.RegisterMappings();
 
@@ -28,7 +30,9 @@ app.MapDefaultEndpoints();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.MapOpenApi("map");
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
