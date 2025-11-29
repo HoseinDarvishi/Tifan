@@ -1,0 +1,6 @@
+@Tifan.Basket_HostAddress = http://localhost:5098
+
+GET {{Tifan.Basket_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
