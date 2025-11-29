@@ -16,6 +16,7 @@ public class BasketItem
         ImageUrl = imageUrl;
     }
 
+    public Guid Id { get; set; }
     public Guid BasketId { get; private set; }
     public Guid ProductId { get; private set; }
     public string ProductName { get; private set; }
