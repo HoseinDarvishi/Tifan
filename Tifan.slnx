@@ -1,6 +1,7 @@
 <Solution>
   <Project Path="Tifan.AppHost/Tifan.AppHost.csproj" />
   <Project Path="Tifan.Basket/Tifan.Basket.csproj" />
+  <Project Path="Tifan.Discount/Tifan.Discount.csproj" />
   <Project Path="Tifan.Product/Tifan.Product.csproj" />
   <Project Path="Tifan.ServiceDefaults/Tifan.ServiceDefaults.csproj" />
 </Solution>

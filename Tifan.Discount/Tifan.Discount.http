@@ -1,0 +1,6 @@
+@Tifan.Discount_HostAddress = http://localhost:5077
+
+GET {{Tifan.Discount_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
