@@ -10,12 +10,12 @@ namespace Tifan.Discount.Services;
 
 public class DiscountService(DiscountDbContext context, IMapper mapper) : IDiscountService
 {
-    public async Task<Guid> AddAsync(CreateDiscount discount)
+    public async Task<DiscountCodeVM> AddAsync(CreateDiscount discount)
     {
         var newDiscount = new DiscountCode(discount.Code, discount.Amount);
         await context.AddAsync(newDiscount);
         await context.SaveChangesAsync();
-        return newDiscount.Id;
+        return mapper.Map<DiscountCodeVM>(newDiscount);
     }
 
     public async Task<DiscountCodeVM> GetAsync(string code, CancellationToken ct = default)

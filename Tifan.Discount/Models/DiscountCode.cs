@@ -7,7 +7,7 @@
             
         }
 
-        public DiscountCode(string code, decimal amount)
+        public DiscountCode(string code, int amount)
         {
             Code = code;
             Amount = amount;
@@ -17,6 +17,6 @@
         public Guid Id { get; private set; }
         public string Code { get; private set; }
         public bool IsExpired { get; private set; }
-        public decimal Amount { get; private set; }
+        public int Amount { get; private set; }
     }
 }

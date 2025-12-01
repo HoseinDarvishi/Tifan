@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option csharp_namespace = "Tifan.Discount.grpcEndpoints";
+
+service DiscountGrpc
+{
+	rpc GetDiscountByCode(RequestGetDiscountByCode) returns (ResponseDiscount);
+	rpc UseDiscount(RequestUseDiscount) returns (ResponseUseDiscount);
+	rpc AddDiscount(RequestAddDiscount) returns (ResponseDiscount);
+}
+
+message RequestAddDiscount
+{
+	string Code = 1;
+	int32 Amount = 2;
+}
+
+message RequestGetDiscountByCode
+{
+	string Code = 1;
+}
+
+message RequestUseDiscount
+{
+	string Code = 1;
+}
+
+message ResponseUseDiscount
+{
+	bool IsSuccess = 1;
+}
+
+message ResponseDiscount
+{
+	string Id = 1;
+	string Code = 2;
+	int32 Amount = 3;
+	bool IsExpire = 4;
+}
