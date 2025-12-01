@@ -3,12 +3,21 @@ using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Tifan.Discount.Infra;
 using Tifan.Discount.IServices;
+using Tifan.Discount.Models;
 using Tifan.Discount.Wrappers;
 
 namespace Tifan.Discount.Services;
 
 public class DiscountService(DiscountDbContext context, IMapper mapper) : IDiscountService
 {
+    public async Task<Guid> AddAsync(CreateDiscount discount)
+    {
+        var newDiscount = new DiscountCode(discount.Code, discount.Amount);
+        await context.AddAsync(newDiscount);
+        await context.SaveChangesAsync();
+        return newDiscount.Id;
+    }
+
     public async Task<DiscountCodeVM> GetAsync(string code, CancellationToken ct = default)
     {
         var discount = await context.Discounts
