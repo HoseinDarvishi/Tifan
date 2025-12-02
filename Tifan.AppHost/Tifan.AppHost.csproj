@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Tifan.Basket\Tifan.Basket.csproj" />
     <ProjectReference Include="..\Tifan.Discount\Tifan.Discount.csproj" />
+    <ProjectReference Include="..\Tifan.Order\Tifan.Order.csproj" />
     <ProjectReference Include="..\Tifan.Product\Tifan.Product.csproj" />
   </ItemGroup>
 
