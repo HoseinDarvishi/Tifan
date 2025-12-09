@@ -17,5 +17,7 @@ public class Order
     public DateTime OrderPlaced { get; private set; }
     public bool OrderPaid { get; private set; }
     public ICollection<OrderItem> OrderItems { get; private set; }
+
+    public void Pay() => OrderPaid = true;
 }
 

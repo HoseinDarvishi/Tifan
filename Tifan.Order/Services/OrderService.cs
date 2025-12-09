@@ -1,4 +1,5 @@
-﻿using MapsterMapper;
+﻿using Mapster;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Tifan.Order.Infra;
 using Tifan.Order.IServices;
@@ -26,8 +27,8 @@ namespace Tifan.Order.Services
         public async Task RemoveOrderItemAsync(Guid orderItemId, CancellationToken ct = default)
             => await context.OrderItems.Where(x => x.Id == orderItemId).ExecuteDeleteAsync(ct);
 
-        public async Task ClearOrderAsync(string userId, CancellationToken ct = default)
-            => await context.Orders.Where(x => x.UserId == userId).ExecuteDeleteAsync(ct);
+        public async Task ClearOrderAsync(Guid orderId, CancellationToken ct = default)
+            => await context.Orders.Where(x => x.Id == orderId).ExecuteDeleteAsync(ct);
 
         public async Task SetItemQuantityAsync(ChangeItemQuantity change , CancellationToken ct = default)
         {
@@ -35,5 +36,35 @@ namespace Tifan.Order.Services
             item.SetQuantity(change.Quantity);
             await context.SaveChangesAsync(ct);
         }
+
+        public async Task PayOrderAsync(Guid orderId , CancellationToken ct = default)
+        {
+            var order = await context.Orders.FindAsync(orderId, ct);
+            order.Pay();
+            await context.SaveChangesAsync(ct);
+        }
+
+        public async Task<List<OrderVM>> GetAllAsync(CancellationToken ct = default)
+            => await context.Orders
+                    .AsNoTracking()
+                    .Include(x => x.OrderItems)
+                    .ProjectToType<OrderVM>()
+                    .ToListAsync(ct);
+
+        public async Task<List<OrderVM>> GetAllAsync(string userId , CancellationToken ct = default)
+            => await context.Orders
+                    .AsNoTracking()
+                    .Include(x => x.OrderItems)
+                    .Where(x=>x.UserId == userId)
+                    .ProjectToType<OrderVM>()
+                    .ToListAsync(ct);
+
+        public async Task<OrderVM> GetAsync(Guid orderId, CancellationToken ct = default)
+            => await context.Orders
+                    .AsNoTracking()
+                    .Include(x => x.OrderItems)
+                    .Where(x => x.Id == orderId)
+                    .ProjectToType<OrderVM>()
+                    .FirstOrDefaultAsync(ct);
     }
 }

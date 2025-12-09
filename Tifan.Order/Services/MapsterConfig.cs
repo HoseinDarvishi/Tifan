@@ -8,6 +8,14 @@ namespace Tifan.Order.Services
     {
         public static void RegisterMappings()
         {
+            TypeAdapterConfig<OrderItemVM, OrderItem>
+                .NewConfig()
+                .TwoWays();
+
+            TypeAdapterConfig<OrderVM, Models.Order>
+                .NewConfig()
+                .TwoWays();
+
             TypeAdapterConfig<AddOrderItem, OrderItem>
                 .NewConfig()
                 .TwoWays();
