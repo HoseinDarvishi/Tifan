@@ -31,9 +31,4 @@
     <ProjectReference Include="..\Tifan.ServiceDefaults\Tifan.ServiceDefaults.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Wrappers\" />
-  </ItemGroup>
-
 </Project>
