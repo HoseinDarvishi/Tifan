@@ -12,15 +12,24 @@ namespace Tifan.Order.Services
     {
         public async Task AddAsync(AddOrder order, CancellationToken ct = default)
         {
-            var newOrder = mapper.Map<Models.Order>(order);
-            await context.AddAsync(order, ct);
+            var orderItems = order.Items
+                .Select(x => new OrderItem
+                {
+                    ProductId = x.ProductId,
+                    ProductName = x.ProductName,
+                    ProductPrice = x.ProductPrice,
+                    Quantity = x.Quantity
+                }).ToList();
+
+            var newOrder = new Models.Order(order.UserId,orderItems);
+            await context.Orders.AddAsync(newOrder, ct);
             await context.SaveChangesAsync(ct);
         }
 
         public async Task AddOrderItemAsync(AddOrderItem item, CancellationToken ct = default)
         {
             var orderItem = mapper.Map<OrderItem>(item);
-            await context.AddAsync(item, ct);
+            await context.AddAsync(orderItem, ct);
             await context.SaveChangesAsync(ct);
         }
 

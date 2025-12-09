@@ -9,8 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-builder.Services.AddControllers();
-builder.Services.AddOpenApi();
 builder.Services.AddMapster();
 builder.Services.AddSwaggerGen();
 
@@ -25,6 +23,9 @@ builder.Services.AddDbContext<OrderDbContext>(options =>
     ));
 
 builder.Services.AddTransient<IOrderService, OrderService>();
+
+builder.Services.AddControllers();
+builder.Services.AddOpenApi();
 
 var app = builder.Build();
 

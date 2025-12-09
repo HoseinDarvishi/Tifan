@@ -6,7 +6,7 @@ namespace Tifan.Order.Controllers
 {
     [ApiController]
     [Route("Tifan/Api/[controller]")]
-    public class OrderController(IOrderService orderService) : ControllerBase
+    public class OrderController(IOrderService orderService) : Controller
     {
         [HttpGet]
         public async Task<IActionResult> Get(CancellationToken ct)
@@ -46,7 +46,7 @@ namespace Tifan.Order.Controllers
         [HttpPut("Pay/{orderId:guid}")]
         public async Task<IActionResult> PayOrder(Guid orderId)
         {
-            await orderService.PayOrderAsync(orderId);
+             await orderService.PayOrderAsync(orderId);
             return Ok();
         }
 

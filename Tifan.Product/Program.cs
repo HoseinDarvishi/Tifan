@@ -7,6 +7,7 @@ using Tifan.Product.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
+
 builder.Services.AddMapster();
 builder.Services.AddSwaggerGen();
 
@@ -37,5 +38,4 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();
